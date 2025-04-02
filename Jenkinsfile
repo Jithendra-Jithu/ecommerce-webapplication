@@ -34,8 +34,7 @@ pipeline {
             steps {
                 script {
                     sh '''
-                    docker stop ecommerce || true
-                    docker rm ecommerce || true
+                   
                     docker run -d -p 5000:5000 --name ecommerce ${REGISTRY}
                     '''
                 }
