@@ -4,7 +4,7 @@ pipeline {
     environment {
         DOCKER_IMAGE = 'my-ecommerce-backend'
         
-        REGISTRY = 'jthu145/my-ecommerce'
+        REGISTRY = 'jthu145/my-ecommerce:latest'
     }
     
     stages {
