@@ -2,7 +2,7 @@ pipeline {
     agent any
     
     environment {
-        DOCKER_IMAGE = 'my-ecommerce-backend'
+        
         
         REGISTRY = 'jthu145/my-ecommerce:latest'
     }
@@ -16,7 +16,7 @@ pipeline {
         stage('Build Docker Image') {
             steps {
                 script {
-                    sh 'cd backend && docker build -t ${DOCKER_IMAGE} .'
+                    sh 'cd backend && docker build -t ${REGISTRY} .'
                 }
             }
         }
