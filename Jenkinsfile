@@ -4,13 +4,13 @@ pipeline {
     environment {
         DOCKER_IMAGE = 'my-ecommerce-backend'
         DOCKER_TAG = "${BUILD_NUMBER}"
-        REGISTRY = 'barathkumar29/my-ecommerce'
+        REGISTRY = 'jthu145/my-ecommerce'
     }
     
     stages {
         stage('Checkout Code') {
             steps {
-                git branch: 'main', url: 'https://github.com/jkbarathkumar/ecommerce-webapplication.git'            }
+                git branch: 'main', url: 'https://github.com/JithendraJithu/ecommerce-webapplication.git'            }
         }
         
         stage('Build Docker Image') {
