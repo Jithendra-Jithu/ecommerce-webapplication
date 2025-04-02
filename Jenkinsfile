@@ -16,7 +16,7 @@ pipeline {
         stage('Build Docker Image') {
             steps {
                 script {
-                    sh 'cd backend && docker build -t ${DOCKER_IMAGE}:${DOCKER_TAG} .'
+                    sh 'cd backend && sudo docker build -t ${DOCKER_IMAGE}:${DOCKER_TAG} .'
                 }
             }
         }
