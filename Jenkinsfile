@@ -1,53 +1,40 @@
 pipeline {
     agent any
-    
-    environment {
-        
-        
-        REGISTRY = 'jthu145/my-ecommerce:latest'
-    }
-    
+       environment {
+    DOCKER_CREDENTIALS = 'fb16b1ba-d2e9-41bb-8654-d00d3b5b61e6'
+       }
     stages {
-        stage('Checkout Code') {
+        stage('Clone Repository') {
             steps {
-                git branch: 'main', url: 'https://github.com/Jithendra-Jithu/ecommerce-webapplication.git'            }
+                git branch: 'main', url: 'https://github.com/Jithendra-Jithu/ecommerce-webapplication.git'
+            }
         }
-        
+
         stage('Build Docker Image') {
             steps {
-                script {
-                    sh 'cd backend && docker build -t ${REGISTRY} .'
+                sh 'docker build -t jithu145/ecommerce-backend:latest backend/'
+            }
+        }
+
+       stage('Push to Docker Hub') {
+    steps {
+        script {
+            withCredentials([usernamePassword(credentialsId: DOCKER_CREDENTIALS, passwordVariable: 'DOCKER_PASSWORD', usernameVariable: 'DOCKER_USERNAME')]) {
+                // Login securely using --password-stdin
+                sh 'echo $DOCKER_PASSWORD | docker login -u $DOCKER_USERNAME --password-stdin'
+
+                    sh 'docker push jithu145/ecommerce-backend:latest'
                 }
             }
         }
-        
-        stage('Push to Docker Hub') {
+       }
+
+        stage('Deploy') {
             steps {
-                withDockerRegistry([credentialsId: 'fb16b1ba-d2e9-41bb-8654-d00d3b5b61e6', url: '']) {
-                   
-                    sh 'docker push ${REGISTRY}'
-                }
+                sh 'docker run -d -p 5000:5000 jithu154/ecommerce-backend:latest'
             }
-        }
-        
-        stage('Deploy to Local Docker') {
-            steps {
-                script {
-                    sh '''
-                   
-                    docker run -d -p 5000:5000 --name ecommerce ${REGISTRY}
-                    '''
-                }
-            }
-        }
-    }
-    
-    post {
-        success {
-            echo "✅ Deployment Successful!"
-        }
-        failure {
-            echo "❌ Deployment Failed!"
         }
     }
 }
+
+
