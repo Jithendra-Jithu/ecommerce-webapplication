@@ -31,7 +31,7 @@ pipeline {
 
         stage('Deploy') {
             steps {
-                sh 'docker run -d -p 5000:5000 jithu154/ecommerce-backend:latest'
+                sh 'docker run -d -p 5000:5000 jithu145/ecommerce-backend:latest'
             }
         }
     }
